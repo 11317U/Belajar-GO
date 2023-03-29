@@ -6,14 +6,13 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 const PORT = ":3000"
 
-type Controllers struct {
-	masterDB *gorm.DB
-}
+// type Controllers struct {
+// 	masterDB *gorm.DB
+// }
 
 // func New(db *gorm.DB) *Controllers {
 // 	return &Controllers{
@@ -43,8 +42,8 @@ func main() {
 	// db := database.db()
 	// controller := controller.New(db)
 
-	dbs := database.Connect()
-	controller := controller.New(dbs)
+	db := database.Connect()
+	controller := controller.New(db)
 
 	r := gin.Default()
 
@@ -54,11 +53,14 @@ func main() {
 		})
 	})
 	r.POST("/book", controller.CreateBook)
+	r.GET("/book", controller.GetBook)
+	r.DELETE("/book/:id", controller.DeleteBook)
+	r.GET("/book/:id", controller.GetBookid)
 
 	// Users
 	// users := r.Group("/v1/users")
-	// {
-	// 	users.POST("/", controller.CreateBook)
+	// // {
+	// users.POST("/", controller.CreateBook)
 	// 	users.GET("/products", controller.GetUsersWithProducts)
 	// }
 

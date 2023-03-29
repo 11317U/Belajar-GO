@@ -1,7 +1,6 @@
 package database
 
 import (
-	"apigorm/models"
 	"fmt"
 	"log"
 
@@ -15,7 +14,7 @@ const (
 	DB_PASSWORD = "localhost"
 	DB_PORT     = 5432
 	DB_NAME     = "dblearngorm"
-	DEBUG_MODE  = true // true/false
+	// DEBUG_MODE  = true // true/false
 )
 
 var (
@@ -23,7 +22,7 @@ var (
 	err error
 )
 
-func Connect() {
+func Connect() *gorm.DB {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT)
 
 	db, err = gorm.Open(postgres.Open(config), &gorm.Config{})
@@ -31,5 +30,6 @@ func Connect() {
 		log.Fatal("error connecting to database :", err)
 	}
 
-	db.Debug().AutoMigrate(models.Books{})
+	// db.Debug().AutoMigrate(models.Books{})
+	return db
 }
